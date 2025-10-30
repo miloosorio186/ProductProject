@@ -1,53 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Productos</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <h1>Gestión de Productos</h1>
     </header>
 
-    <section id="form-section">
-        <h2>Agregar / Editar Producto</h2>
-        <form id="product-form">
-            <input type="hidden" id="product-id">
+    <main>
+        <section id="form-section">
+            <h2>Agregar / Editar Producto</h2>
+            <form id="product-form">
+                <label>Nombre:</label>
+                <input type="text" id="nombre" placeholder="Ingrese el nombre" required>
 
-            <label>Nombre:</label>
-            <input type="text" id="nombre" required>
+                <label>Descripción:</label>
+                <input type="text" id="descripcion" placeholder="Ingrese la descripción" required>
 
-            <label>Descripción:</label>
-            <input type="text" id="descripcion" required>
+                <label>Precio:</label>
+                <input type="number" id="precio" placeholder="Ingrese el precio" required>
+                <label>Unidades disponibles:</label>
+                <input type="number" id="stock" placeholder="Ingrese el stock" required>
 
-            <label>Precio:</label>
-            <input type="number" id="precio" required>
+                <label>Estado:</label>
+                <select id="estado">
+                    <option value="true">Disponible</option>
+                    <option value="false">No disponible</option>
+                </select>
 
-            <button type="submit">Guardar</button>
-            <button type="button" id="cancel-edit" style="display:none;">Cancelar</button>
-        </form>
-    </section>
+                <div class="button-group">
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="cancel-edit" style="display:none;">Cancelar</button>
+                </div>
+            </form>
+        </section>
 
-    <section id="list-section">
-        <h2>Lista de Productos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="product-list">
-                <!-- Aquí se agregan los productos con JS -->
-            </tbody>
-        </table>
-    </section>
+        <section id="list-section">
+            <h2>Lista de Productos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Estado</th>
+                        <th>Fecha Creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="product-list">
+                </tbody>
+            </table>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
+
 </html>

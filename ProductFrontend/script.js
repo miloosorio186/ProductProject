@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5122/api/Productos"; // ajusta el puerto
+const API_URL = "http://localhost:5122/api/Productos"; // ajusta el puerto si es diferente
 
 const productForm = document.getElementById("product-form");
 const productList = document.getElementById("product-list");
@@ -20,15 +20,24 @@ async function loadProducts() {
         row.innerHTML = `
             <td>${p.id}</td>
             <td>${p.nombre}</td>
-            <td>${p.descripcion}</td>
-            <td>$${p.precio}</td>
-            <td>
-                <button onclick="editProduct(${p.id}, '${p.nombre}', '${p.descripcion}', ${p.precio})">✏️ Editar</button>
-                <button onclick="deleteProduct(${p.id})">🗑️ Eliminar</button>
-            </td>
+            <td>${p.descripcion || "-"}</td>
+            <td>$${p.precio.toFixed(2)}</td>
+            <td>${p.stock}</td>
+            <td>${p.estado ? "✅" : "❌"}</td>
+            <td>${new Date(p.fechaCreacion).toLocaleDateString()}</td>
+          <td>
+    <button style="background-color: #4CAF50; color: white;" onclick="editProduct(${p.id}, '${escapeQuotes(p.nombre)}', '${escapeQuotes(p.descripcion)}', ${p.precio}, ${p.stock}, ${p.estado})">✏️</button>
+    <button style="background-color: #f44336; color: white;" onclick="deleteProduct(${p.id})">🗑️</button>
+</td>
+
         `;
         productList.appendChild(row);
     });
+}
+
+// Escapar comillas simples para evitar errores al editar
+function escapeQuotes(text) {
+    return text ? text.replace(/'/g, "\\'") : "";
 }
 
 // Guardar o editar producto
@@ -38,34 +47,43 @@ productForm.addEventListener("submit", async (e) => {
     const producto = {
         nombre: document.getElementById("nombre").value,
         descripcion: document.getElementById("descripcion").value,
-        precio: parseFloat(document.getElementById("precio").value)
+        precio: parseFloat(document.getElementById("precio").value),
+        stock: parseInt(document.getElementById("stock").value),
+        estado: document.getElementById("estado").value === "true"
     };
 
-    if (editMode) {
-        await fetch(`${API_URL}/${currentId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: currentId, ...producto })
-        });
-        editMode = false;
-        currentId = null;
-        cancelEdit.style.display = "none";
-    } else {
-        await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(producto)
-        });
-    }
+    try {
+        if (editMode) {
+            await fetch(`${API_URL}/${currentId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: currentId, ...producto })
+            });
+            editMode = false;
+            currentId = null;
+            cancelEdit.style.display = "none";
+        } else {
+            await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(producto)
+            });
+        }
 
-    productForm.reset();
-    loadProducts();
+        productForm.reset();
+        loadProducts();
+    } catch (error) {
+        console.error("Error al guardar el producto:", error);
+        alert("Ocurrió un error al guardar el producto.");
+    }
 });
 
-function editProduct(id, nombre, descripcion, precio) {
+function editProduct(id, nombre, descripcion, precio, stock, estado) {
     document.getElementById("nombre").value = nombre;
     document.getElementById("descripcion").value = descripcion;
     document.getElementById("precio").value = precio;
+    document.getElementById("stock").value = stock;
+    document.getElementById("estado").value = estado ? "true" : "false";
     currentId = id;
     editMode = true;
     cancelEdit.style.display = "inline";

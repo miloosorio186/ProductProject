@@ -3,7 +3,7 @@ using ProductApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Conexión a base de datos SQLite
+// 💾 Conexión a base de datos SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=productosDB.db"));
 
