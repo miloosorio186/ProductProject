@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +8,28 @@
 </head>
 
 <body>
+    <div class="background-shapes">
+    <!-- Puntos -->
+    <div class="shape dots"></div>
+
+    <!-- Línea diagonal -->
+    <div class="shape line"></div>
+
+    <!-- Cuadrado -->
+    <div class="shape square"></div>
+
+    <!-- Escalerita -->
+    <div class="shape stairs"></div>
+</div>
+
+    <div class="background"></div> <!-- Fondo decorativo -->
+
     <header>
         <h1>Gestión de Productos</h1>
     </header>
 
     <main>
-        <section id="form-section">
+        <section id="form-section" class="glass-card">
             <h2>Agregar / Editar Producto</h2>
             <form id="product-form">
                 <label>Nombre:</label>
@@ -25,6 +40,7 @@
 
                 <label>Precio:</label>
                 <input type="number" id="precio" placeholder="Ingrese el precio" required>
+
                 <label>Unidades disponibles:</label>
                 <input type="number" id="stock" placeholder="Ingrese el stock" required>
 
@@ -35,13 +51,13 @@
                 </select>
 
                 <div class="button-group">
-                    <button type="submit">Guardar</button>
-                    <button type="button" id="cancel-edit" style="display:none;">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
+                    <button type="button" id="cancel-edit" class="btn-secondary" style="display:none;">Cancelar</button>
                 </div>
             </form>
         </section>
 
-        <section id="list-section">
+        <section id="list-section" class="glass-card">
             <h2>Lista de Productos</h2>
             <table>
                 <thead>
@@ -56,13 +72,11 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="product-list">
-                </tbody>
+                <tbody id="product-list"></tbody>
             </table>
         </section>
     </main>
 
     <script src="script.js"></script>
 </body>
-
 </html>
