@@ -23,7 +23,7 @@ async function loadProducts() {
             <td>${p.descripcion || "-"}</td>
             <td>$${p.precio.toFixed(2)}</td>
             <td>${p.stock}</td>
-            <td>${p.estado ? "✅" : "❌"}</td>
+            <td>${p.estado ? "Disponible" : "Agotado"}</td>
             <td>${new Date(p.fechaCreacion).toLocaleDateString()}</td>
           <td>
     <button style="background-color: #4CAF50; color: white;" onclick="editProduct(${p.id}, '${escapeQuotes(p.nombre)}', '${escapeQuotes(p.descripcion)}', ${p.precio}, ${p.stock}, ${p.estado})">✏️</button>
